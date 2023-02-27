@@ -24,6 +24,11 @@ cart_dataRouter.get("/", async (req, res) => {
 });
 cart_dataRouter.post("/create", async (req, res) => {
   try {
+    let {title}=req.body;
+    const product = await cartModel.find({title:title});
+    if(product.length>=1){
+      res.send({ msg: "Product is already in  the Cart" });
+    }
     const payloade = req.body;
     if (Array.isArray(payloade)) {
       for (let el of payloade) {
